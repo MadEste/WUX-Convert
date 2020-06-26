@@ -5,7 +5,8 @@
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <RootNamespace>Prototype_Fixes.Vsix</RootNamespace>
-    <AssemblyName>Prototype_Fixes</AssemblyName>
+	  
+    <AssemblyName>Prototype_Fixes.Vsix</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -26,6 +27,7 @@
     <StartAction>Program</StartAction>
     <StartProgram>$(DevEnvDir)devenv.exe</StartProgram>
     <StartArguments>/rootsuffix $(VSSDKTargetPlatformRegRootSuffix)</StartArguments>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
   <Import Sdk="Microsoft.NET.Sdk" Project="Sdk.targets" />
