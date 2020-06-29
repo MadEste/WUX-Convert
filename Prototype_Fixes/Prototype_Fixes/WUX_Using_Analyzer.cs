@@ -45,7 +45,7 @@ namespace Prototype_Fixes
             //try casting to UsingSyntax
             var node = (UsingDirectiveSyntax)context.Node;
             //Skip usings that are not in windows namespace
-            if (!node.Name.ToString().StartsWith("Windows"))
+            if (!node.Name.ToString().StartsWith("Windows.UI"))
             {
                 return;
             }
