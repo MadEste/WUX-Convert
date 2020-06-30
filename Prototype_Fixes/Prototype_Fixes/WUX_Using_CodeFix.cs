@@ -28,7 +28,7 @@ namespace Prototype_Fixes
         public override ImmutableArray<string> FixableDiagnosticIds
         {
             //use the id of the associated analyzer to create array
-            get { return ImmutableArray.Create(WUX_Using_Analyzer.WUX_Using_ID); }
+            get { return ImmutableArray.Create(WUX_Using_Analyzer.WUX_Var_ID); }
         }
 
         // an optional overide to fix all occurences instead of just one.
@@ -53,21 +53,27 @@ namespace Prototype_Fixes
             //TRY using ID
             var diagnosticID = diagnostic.Location;
 
+            //var tokens = root.FindToken(diagnosticSpanSrc.Start).Parent.AncestorsAndSelf().OfType<IdentifierNameSyntax>();
+
+            //new code
+            var t = root.FindNode(diagnosticSpanSrc) as IdentifierNameSyntax;
+
             //find the token of associated diagnostic in the tree
-            var token = root.FindToken(diagnosticSpanSrc.Start).Parent.AncestorsAndSelf().OfType<UsingDirectiveSyntax>().First();
+            //var token = root.FindToken(diagnosticSpanSrc.Start).Parent.AncestorsAndSelf().OfType<UsingDirectiveSyntax>().First();
+
 
             // Register a code action that will invoke the fix.
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: title,
-                    createChangedDocument: c => ReplaceNameAsync(context.Document, token, c),
+                    createChangedDocument: c => ReplaceNameAsync(context.Document, t, c),
                     equivalenceKey: title),
                 diagnostic);
         }
 
         //Actual code to update tree node
 
-        private async Task<Document> ReplaceNameAsync(Document doc, UsingDirectiveSyntax usingNode, CancellationToken c)
+        private async Task<Document> ReplaceNameAsync(Document doc, IdentifierNameSyntax usingNode, CancellationToken c)
         {
             //grab the Windows token to replace
             var winToken = usingNode.DescendantTokens().Single(n => n.Text == "Windows");

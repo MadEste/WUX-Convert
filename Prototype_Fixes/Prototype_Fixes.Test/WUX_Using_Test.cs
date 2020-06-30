@@ -99,17 +99,17 @@ namespace Prototype_Fixes.Test
                 }
             }";
 
-        // 4. Inline Using CodeFix
-        private const string UsingInlineWUX = @"
+        // 4. Inline Using CodeFix before assingment
+        private const string UsingInlineWUXBefore = @"
             using System;
             namespace FakeNamespace
             {
                 class Program
                 {
-                    Windows.UI.Xaml.Controls.Frame rootFrame = Window.Current.Content as Windows.UI.Xaml.Controls.Frame; //Random Comment
+                    Windows.UI.Xaml.Controls.Frame rootFrame = Window.Current.Content as Microsoft.UI.Xaml.Controls.Frame; //Random Comment
                 }
             }";
-        private const string UsingInlineWUXFix = @"
+        private const string UsingInlineWUXBeforeFix = @"
             using System;
             namespace FakeNamespace
             {
@@ -119,7 +119,27 @@ namespace Prototype_Fixes.Test
                 }
             }";
 
-        // 5. Inline static using
+        // 5. Inline Using CodeFix after equals assign
+        private const string UsingInlineWUXAfter = @"
+            using System;
+            namespace FakeNamespace
+            {
+                class Program
+                {
+                    Microsoft.UI.Xaml.Controls.Frame rootFrame = Window.Current.Content as Windows.UI.Xaml.Controls.Frame; //Random Comment
+                }
+            }";
+        private const string UsingInlineWUXAfterFix = @"
+            using System;
+            namespace FakeNamespace
+            {
+                class Program
+                {
+                    Microsoft.UI.Xaml.Controls.Frame rootFrame = Window.Current.Content as Microsoft.UI.Xaml.Controls.Frame; //Random Comment
+                }
+            }";
+
+        // 6. Inline static using
         private const string UsingInlineStaticWUX = @"
             using System;
             namespace FakeNamespace
@@ -150,11 +170,12 @@ namespace Prototype_Fixes.Test
         }
 
         [DataTestMethod]
-        [DataRow(UsingWUX, UsingWUXFix, 3, 13),
-            DataRow(UsingWUXAlias, UsingWUXAliasFix, 3, 13),
-            DataRow(UsingStaticWUX, UsingStaticWUXFix, 3, 13),
-            DataRow(UsingInlineWUX, UsingInlineWUXFix, 7, 21),
-            DataRow(UsingInlineStaticWUX, UsingInlineStaticWUXFix, 7, 21)]
+        [DataRow(UsingWUX, UsingWUXFix, 3, 19),
+            DataRow(UsingWUXAlias, UsingWUXAliasFix, 3, 27),
+            DataRow(UsingStaticWUX, UsingStaticWUXFix, 3, 26),
+            DataRow(UsingInlineWUXBefore, UsingInlineWUXBeforeFix, 7, 21),
+            DataRow(UsingInlineWUXAfter, UsingInlineWUXAfterFix, 7, 92),
+            DataRow(UsingInlineStaticWUX, UsingInlineStaticWUXFix, 7, 28)]
         public void WhenDiagosticIsRaisedFixUpdatesCode(
            string test,
            string fixTest,
@@ -163,9 +184,9 @@ namespace Prototype_Fixes.Test
         {
             var expected = new DiagnosticResult
             {
-                Id = WUX_Using_Analyzer.DiagnosticId,
+                Id = WUX_Using_Analyzer.WUX_Var_ID,
                 Message = new LocalizableResourceString(nameof(Prototype_Fixes.Resources.WUX_Using_MessageFormat), Prototype_Fixes.Resources.ResourceManager, typeof(Prototype_Fixes.Resources)).ToString(),
-                Severity = DiagnosticSeverity.Warning,
+                Severity = DiagnosticSeverity.Error,
                 Locations =
                     new[] {
                             new DiagnosticResultLocation("Test0.cs", line, column)
@@ -176,10 +197,6 @@ namespace Prototype_Fixes.Test
 
             VerifyCSharpFix(test, fixTest);
         }
-
-
-
-
 
         //Returns a WUX_Using_CodeFix
         protected override CodeFixProvider GetCSharpCodeFixProvider()

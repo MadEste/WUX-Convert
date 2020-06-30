@@ -30,7 +30,9 @@ namespace Prototype_Fixes
         private static readonly DiagnosticDescriptor WUX_Var_Rule = new DiagnosticDescriptor(WUX_Var_ID, WUX_Using_Title, WUX_Using_MessageFormat, Category, DiagnosticSeverity.Error, isEnabledByDefault: true, description: WUX_Using_Description);
 
         //Returns a set of descriptors (Rule) that this analyzer is capable of reproducing
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get { return ImmutableArray.Create(WUX_Using_Rule, WUX_Var_Rule); } }
+        //public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get { return ImmutableArray.Create(WUX_Using_Rule, WUX_Var_Rule); } }
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get { return ImmutableArray.Create(WUX_Var_Rule); } }
+        //Temporary change ids for above rule
 
         // Overide to implement DiagnosticAnalyzer Class
         public override void Initialize(AnalysisContext context)
@@ -38,8 +40,9 @@ namespace Prototype_Fixes
             //initialize context to analyze all the nodes
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.Analyze | GeneratedCodeAnalysisFlags.None);
             context.EnableConcurrentExecution();
-            context.RegisterSyntaxNodeAction(AnalyzeUsingNode, SyntaxKind.UsingDirective);
-            context.RegisterSyntaxNodeAction(AnalyzeVarNode, SyntaxKind.VariableDeclaration);
+           // context.RegisterSyntaxNodeAction(AnalyzeUsingNode, SyntaxKind.UsingDirective);
+            //test checking qualified name instead
+            context.RegisterSyntaxNodeAction(AnalyzeVarNode, SyntaxKind.IdentifierName);
         }
 
         // Decides if node from Using Directive needs a warning or not.
@@ -55,18 +58,16 @@ namespace Prototype_Fixes
             context.ReportDiagnostic(Diagnostic.Create(WUX_Using_Rule, context.Node.GetLocation()));
         }
 
-        // Decides if node from Variable Declaration needs a warning or not.
+        // Decides if node from qualified name needs to be replaced
         private void AnalyzeVarNode(SyntaxNodeAnalysisContext context)
         {
-            //TODO: OVerhaul this!
-            //try casting to UsingSyntax, should always succede because of filter in initialize
-            var node = (UsingDirectiveSyntax)context.Node;
-            //Skip usings that are not in windows namespace
-            if (!node.Name.ToString().StartsWith("Windows.UI"))
+            //try casting to VariableDeclaration, should always succede because of filter in initialize
+            var node = (IdentifierNameSyntax)context.Node;
+            // Create Diagnostic to report if wrong
+            if (node.Identifier.ToString().Equals("Windows") && node.Parent.ToString().Equals("Windows.UI"))
             {
-                return;
+                context.ReportDiagnostic(Diagnostic.Create(WUX_Var_Rule, context.Node.GetLocation()));
             }
-            context.ReportDiagnostic(Diagnostic.Create(WUX_Using_Rule, context.Node.GetLocation()));
         }
     }
 }

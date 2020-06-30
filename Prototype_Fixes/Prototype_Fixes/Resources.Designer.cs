@@ -70,7 +70,7 @@ namespace Prototype_Fixes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Windows Namespace &apos;{0}&apos; instead of Microsoft.
+        ///   Looks up a localized string similar to Using Windows Namespace instead of Microsoft.
         /// </summary>
         public static string WUX_Using_MessageFormat {
             get {
