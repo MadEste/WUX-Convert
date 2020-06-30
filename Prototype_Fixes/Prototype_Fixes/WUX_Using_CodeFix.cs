@@ -18,8 +18,8 @@ using System.Diagnostics;
 
 namespace Prototype_Fixes
 {
-    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(UsingHighlightCodeFix)), Shared]
-    class UsingHighlightCodeFix : CodeFixProvider
+    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(WUX_Using_CodeFix)), Shared]
+    public class WUX_Using_CodeFix : CodeFixProvider
     {
         // title of codeFix
         private const string title = "Update Windows Namespace";
@@ -28,7 +28,7 @@ namespace Prototype_Fixes
         public override ImmutableArray<string> FixableDiagnosticIds
         {
             //use the id of the associated analyzer to create array
-            get { return ImmutableArray.Create(WUX_Using_Analyzer.DiagnosticId); }
+            get { return ImmutableArray.Create(WUX_Using_Analyzer.WUX_Using_ID); }
         }
 
         // an optional overide to fix all occurences instead of just one.
@@ -67,8 +67,6 @@ namespace Prototype_Fixes
 
         //Actual code to update tree node
 
-        //TODO TRY USING LOCATION TO GRAB NODE INSTEAD!!!
-
         private async Task<Document> ReplaceNameAsync(Document doc, UsingDirectiveSyntax usingNode, CancellationToken c)
         {
             //grab the Windows token to replace
@@ -84,17 +82,19 @@ namespace Prototype_Fixes
 
             //Replace node with new
             var newNode = usingNode.ReplaceToken(winToken, micToken);
+           
 
 
             // add annotations to format the new token d
-            //TODO: TEST IF NECESSARY!
+            //TODO: TEST IF NECESSARY! - Sometimes removes tabs etc, consider removing entirely
             var formattedNode = newNode.WithAdditionalAnnotations(Formatter.Annotation);
 
             // replace the old win token with new Microsoft
             var oldRoot = await doc.GetSyntaxRootAsync(c);
             Debug.WriteLine(usingNode.ToFullString());
             Debug.WriteLine(newNode.ToFullString());
-            var newRoot = oldRoot.ReplaceNode(usingNode, formattedNode);
+            //Try Not using formattedNode
+            var newRoot = oldRoot.ReplaceNode(usingNode, newNode);
             // Return a new doc wit htransfromed tree
             return doc.WithSyntaxRoot(newRoot);
         }
