@@ -69,13 +69,29 @@ namespace Prototype_Fixes.Test
                 }
             }";
 
+        // 4. Windows.UI should still be valid on its own
+        private const string NoWUX4 = @"
+            using System;
+            using Windows.UI.Text;
+            namespace FakeNamespace
+            {
+                class Program
+                {
+                    static void Main(string[] args)
+                    {
+                        int i = 0;
+                        Console.WriteLine(i++);
+                    }
+                }
+            }";
+
 
         // This contains code That should be fixed
 
         // 1. Regular using CodeFix
         private const string UsingWUX = @"
             using System;
-            using Windows.UI.XAML;
+            using Windows.UI.Xaml;
             namespace FakeNamespace
             {
                 class Program
@@ -84,7 +100,7 @@ namespace Prototype_Fixes.Test
             }";
         private const string UsingWUXFix = @"
             using System;
-            using Microsoft.UI.XAML;
+            using Microsoft.UI.Xaml;
             namespace FakeNamespace
             {
                 class Program
@@ -95,7 +111,7 @@ namespace Prototype_Fixes.Test
         // 2. Using Directive with Alias and CodeFix
         private const string UsingWUXAlias = @"
             using System;
-            using alias = Windows.UI.XAML;
+            using alias = Windows.UI.Xaml;
             namespace FakeNamespace
             {
                 class Program
@@ -104,7 +120,7 @@ namespace Prototype_Fixes.Test
             }";
         private const string UsingWUXAliasFix = @"
             using System;
-            using alias = Microsoft.UI.XAML;
+            using alias = Microsoft.UI.Xaml;
             namespace FakeNamespace
             {
                 class Program
@@ -195,7 +211,7 @@ namespace Prototype_Fixes.Test
 
         //Denotes that method is a data test
         [DataTestMethod]
-        [DataRow(""), DataRow(NoWUX1), DataRow(NoWUX2), DataRow(NoWUX3)]
+        [DataRow(""), DataRow(NoWUX1), DataRow(NoWUX2), DataRow(NoWUX3), DataRow(NoWUX4)]
         // Test Method for valid code with no triggered diagnostics
         public void ValidWUXUsingNoDiagnostic(string testCode)
         {
