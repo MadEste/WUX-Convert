@@ -57,8 +57,18 @@ Not everything in Windows.UI.Text is part of Xaml.Today, Windows.UI.Text itself 
 
 All of the above listed types will be lifted to DCPP. 
 
+### Windows.System
+
+- Windows.System.DispatcherQueue 
+- Windows.System.DispatcherQueueController 
+- Windows.System.DispatcherQueueHandler 
+- Windows.System.DispatcherQueuePriority 
+- Windows.System.DispatcherQueueShutdownStartingEventArgs 
+- Windows.System.DispatcherQueueTimer
+
 ### To Lift:
  
+- Windows.System... (Not Mentioned in Spec)
 - Windows.UI.Xaml
 - Windows.UI.Colors
 - Windows.UI.ColorHelper

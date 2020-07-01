@@ -22,8 +22,8 @@ namespace Prototype_Fixes.Test
     {
         // This contains code to analyze where no diagnostic should be reported
 
-        // <SnippetVariableAssigned>
-        private const string NoWUX = @"
+        // 1. No Windows Namespace usings
+        private const string NoWUX1 = @"
             using System;
             namespace FakeNamespace
             {
@@ -36,6 +36,39 @@ namespace Prototype_Fixes.Test
                     }
                 }
             }";
+
+        // 2. No Windows Namespace usings
+        private const string NoWUX2 = @"
+            using System;
+            using Windows.UI.Color;
+            namespace FakeNamespace
+            {
+                class Program
+                {
+                    static void Main(string[] args)
+                    {
+                        int i = 0;
+                        Console.WriteLine(i++);
+                    }
+                }
+            }";
+
+        // 3. Windows.UI should still be valid on its own
+        private const string NoWUX3 = @"
+            using System;
+            using Windows.UI;
+            namespace FakeNamespace
+            {
+                class Program
+                {
+                    static void Main(string[] args)
+                    {
+                        int i = 0;
+                        Console.WriteLine(i++);
+                    }
+                }
+            }";
+
 
         // This contains code That should be fixed
 
@@ -162,7 +195,7 @@ namespace Prototype_Fixes.Test
 
         //Denotes that method is a data test
         [DataTestMethod]
-        [DataRow(""), DataRow(NoWUX)]
+        [DataRow(""), DataRow(NoWUX1), DataRow(NoWUX2), DataRow(NoWUX3)]
         // Test Method for valid code with no triggered diagnostics
         public void ValidWUXUsingNoDiagnostic(string testCode)
         {
