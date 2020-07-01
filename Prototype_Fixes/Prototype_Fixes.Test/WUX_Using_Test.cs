@@ -242,8 +242,5 @@ namespace Prototype_Fixes.Test
         {
             return new WUX_Using_Analyzer();
         }
-        
-
-
     }
 }

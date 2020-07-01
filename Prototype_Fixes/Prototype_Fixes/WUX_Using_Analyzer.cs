@@ -38,21 +38,41 @@ namespace Prototype_Fixes
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.Analyze | GeneratedCodeAnalysisFlags.None);
             context.EnableConcurrentExecution();
             // Call analyzer on all Identifier Name Nodes to see if need to implement diagnostic at that location
-            context.RegisterSyntaxNodeAction(AnalyzeNode, SyntaxKind.IdentifierName);
+            context.RegisterSyntaxNodeAction(AnalyzeNode, SyntaxKind.QualifiedName);
         }
 
         // Decides if node needs a diagnostic thrown
         private void AnalyzeNode(SyntaxNodeAnalysisContext context)
         {
-            //try casting to VariableDeclaration, should always succede because of filter in initialize
-            var node = (IdentifierNameSyntax)context.Node;
-            //Check if Identifier is Windows and Parent is Windows.UI
+            //try casting to Qualified Name, should always succede because of filter in initialize
+            var node = (QualifiedNameSyntax)context.Node;
+            //filter out qualified names that are not Windows
+            if (!node.Left.ToString().Equals("Windows"))
+            {
+                return;
+            }
+            //Get full Name
+            String nodeRep = GetFullID(node);
             // TODO: Does this need to be a more explicit check?
-            if (node.Identifier.ToString().Equals("Windows") && node.Parent.ToString().Equals("Windows.UI"))
+            if (nodeRep.StartsWith("Windows.UI"))
             {
                 // Create Diagnostic to report 
-                context.ReportDiagnostic(Diagnostic.Create(WUX_Rule, context.Node.GetLocation()));
+                // to update without changing Codefix, report at the location of its identifier
+                var idNameNode = node.ChildNodes().OfType<IdentifierNameSyntax>().First();
+                context.ReportDiagnostic(Diagnostic.Create(WUX_Rule, idNameNode.GetLocation()));
             }
+        }
+
+        //Navigate up the tree to the full ID name.
+        private String GetFullID(QualifiedNameSyntax node)
+        {
+            //get to the top level parent
+            while (node.Parent.IsKind(SyntaxKind.QualifiedName))
+            {
+                node = (QualifiedNameSyntax)node.Parent;
+            }
+            //Return a string rep of the full Type/Namespace
+            return node.Left.ToString() + "." + node.Right.ToString();
         }
     }
 }
