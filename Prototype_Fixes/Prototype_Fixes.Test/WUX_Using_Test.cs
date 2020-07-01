@@ -184,7 +184,7 @@ namespace Prototype_Fixes.Test
         {
             var expected = new DiagnosticResult
             {
-                Id = WUX_Using_Analyzer.WUX_Var_ID,
+                Id = WUX_Using_Analyzer.WUX_ID,
                 Message = new LocalizableResourceString(nameof(Prototype_Fixes.Resources.WUX_Using_MessageFormat), Prototype_Fixes.Resources.ResourceManager, typeof(Prototype_Fixes.Resources)).ToString(),
                 Severity = DiagnosticSeverity.Error,
                 Locations =

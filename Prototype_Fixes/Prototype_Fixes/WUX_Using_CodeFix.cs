@@ -28,7 +28,7 @@ namespace Prototype_Fixes
         public override ImmutableArray<string> FixableDiagnosticIds
         {
             //use the id of the associated analyzer to create array
-            get { return ImmutableArray.Create(WUX_Using_Analyzer.WUX_Var_ID); }
+            get { return ImmutableArray.Create(WUX_Using_Analyzer.WUX_ID); }
         }
 
         // an optional overide to fix all occurences instead of just one.
@@ -72,9 +72,10 @@ namespace Prototype_Fixes
         }
 
         //Actual code to update tree node
-
         private async Task<Document> ReplaceNameAsync(Document doc, IdentifierNameSyntax usingNode, CancellationToken c)
         {
+            //TODO GO through this code and remove unecessary bits
+
             //grab the Windows token to replace
             var winToken = usingNode.DescendantTokens().Single(n => n.Text == "Windows");
 

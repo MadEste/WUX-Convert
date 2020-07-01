@@ -14,8 +14,8 @@ namespace Prototype_Fixes
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class WUX_Using_Analyzer : DiagnosticAnalyzer
     {
-        public const string WUX_Using_ID = "WUX_Using";
-        public const string WUX_Var_ID = "WUX_Var";
+        // Analyzer ID's
+        public const string WUX_ID = "WUX_Update";
 
         // Localized analyzer descriptions
         // See https://github.com/dotnet/roslyn/blob/master/docs/analyzers/Localizing%20Analyzers.md for more on localization
@@ -25,14 +25,11 @@ namespace Prototype_Fixes
         private const string Category = "Usage";
 
         // Creates a rule for WUX using Diagnostic
-        private static readonly DiagnosticDescriptor WUX_Using_Rule = new DiagnosticDescriptor(WUX_Using_ID, WUX_Using_Title, WUX_Using_MessageFormat, Category, DiagnosticSeverity.Warning, isEnabledByDefault: true, description: WUX_Using_Description);
-        // Creates a rule for WUX VAR Diagnostic TODO: update strings for this message
-        private static readonly DiagnosticDescriptor WUX_Var_Rule = new DiagnosticDescriptor(WUX_Var_ID, WUX_Using_Title, WUX_Using_MessageFormat, Category, DiagnosticSeverity.Error, isEnabledByDefault: true, description: WUX_Using_Description);
+        // Creates a rule for WUX VAR Diagnostic TODO: update strings for this message?
+        private static readonly DiagnosticDescriptor WUX_Rule = new DiagnosticDescriptor(WUX_ID, WUX_Using_Title, WUX_Using_MessageFormat, Category, DiagnosticSeverity.Error, isEnabledByDefault: true, description: WUX_Using_Description);
 
-        //Returns a set of descriptors (Rule) that this analyzer is capable of reproducing
-        //public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get { return ImmutableArray.Create(WUX_Using_Rule, WUX_Var_Rule); } }
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get { return ImmutableArray.Create(WUX_Var_Rule); } }
-        //Temporary change ids for above rule
+        //Returns a set of descriptors (Rules) that this analyzer is capable of reproducing
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get { return ImmutableArray.Create(WUX_Rule); } }
 
         // Overide to implement DiagnosticAnalyzer Class
         public override void Initialize(AnalysisContext context)
@@ -40,33 +37,21 @@ namespace Prototype_Fixes
             //initialize context to analyze all the nodes
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.Analyze | GeneratedCodeAnalysisFlags.None);
             context.EnableConcurrentExecution();
-           // context.RegisterSyntaxNodeAction(AnalyzeUsingNode, SyntaxKind.UsingDirective);
-            //test checking qualified name instead
-            context.RegisterSyntaxNodeAction(AnalyzeVarNode, SyntaxKind.IdentifierName);
+            // Call analyzer on all Identifier Name Nodes to see if need to implement diagnostic at that location
+            context.RegisterSyntaxNodeAction(AnalyzeNode, SyntaxKind.IdentifierName);
         }
 
-        // Decides if node from Using Directive needs a warning or not.
-        private void AnalyzeUsingNode(SyntaxNodeAnalysisContext context)
-        {
-            //try casting to UsingSyntax, should always succede because of filter in initialize
-            var node = (UsingDirectiveSyntax)context.Node;
-            //Skip usings that are not in windows namespace
-            if (!node.Name.ToString().StartsWith("Windows.UI"))
-            {
-                return;
-            }
-            context.ReportDiagnostic(Diagnostic.Create(WUX_Using_Rule, context.Node.GetLocation()));
-        }
-
-        // Decides if node from qualified name needs to be replaced
-        private void AnalyzeVarNode(SyntaxNodeAnalysisContext context)
+        // Decides if node needs a diagnostic thrown
+        private void AnalyzeNode(SyntaxNodeAnalysisContext context)
         {
             //try casting to VariableDeclaration, should always succede because of filter in initialize
             var node = (IdentifierNameSyntax)context.Node;
-            // Create Diagnostic to report if wrong
+            //Check if Identifier is Windows and Parent is Windows.UI
+            // TODO: Does this need to be a more explicit check?
             if (node.Identifier.ToString().Equals("Windows") && node.Parent.ToString().Equals("Windows.UI"))
             {
-                context.ReportDiagnostic(Diagnostic.Create(WUX_Var_Rule, context.Node.GetLocation()));
+                // Create Diagnostic to report 
+                context.ReportDiagnostic(Diagnostic.Create(WUX_Rule, context.Node.GetLocation()));
             }
         }
     }
