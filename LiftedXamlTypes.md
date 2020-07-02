@@ -60,7 +60,7 @@ All of the above listed types will be lifted to DCPP.
 ### Windows.System
 
 - Windows.System.DispatcherQueue 
-- Windows.System.DispatcherQueueController
+- Windows.System.DispatcherQueueController 
 - Windows.System.DispatcherQueueHandler 
 - Windows.System.DispatcherQueuePriority 
 - Windows.System.DispatcherQueueShutdownStartingEventArgs 

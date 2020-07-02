@@ -38,21 +38,91 @@ namespace Prototype_Fixes
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.Analyze | GeneratedCodeAnalysisFlags.None);
             context.EnableConcurrentExecution();
             // Call analyzer on all Identifier Name Nodes to see if need to implement diagnostic at that location
-            context.RegisterSyntaxNodeAction(AnalyzeNode, SyntaxKind.IdentifierName);
+            context.RegisterSyntaxNodeAction(AnalyzeNode, SyntaxKind.QualifiedName);
         }
 
         // Decides if node needs a diagnostic thrown
         private void AnalyzeNode(SyntaxNodeAnalysisContext context)
         {
-            //try casting to VariableDeclaration, should always succede because of filter in initialize
-            var node = (IdentifierNameSyntax)context.Node;
-            //Check if Identifier is Windows and Parent is Windows.UI
+            //try casting to Qualified Name, should always succede because of filter in initialize
+            var node = (QualifiedNameSyntax)context.Node;
+            //filter out qualified names that are not Windows
+            if (!node.Left.ToString().Equals("Windows"))
+            {
+                return;
+            }
+            //Get full Name
+            String nodeRep = GetFullID(node);
             // TODO: Does this need to be a more explicit check?
-            if (node.Identifier.ToString().Equals("Windows") && node.Parent.ToString().Equals("Windows.UI"))
+            if (ValidNames.Contains(nodeRep) || nodeRep.StartsWith("Windows.UI.Xaml")) // for now check if .Xaml after the or instead of direct namespaces
             {
                 // Create Diagnostic to report 
-                context.ReportDiagnostic(Diagnostic.Create(WUX_Rule, context.Node.GetLocation()));
+                // to update without changing Codefix, report at the location of its identifier
+                var idNameNode = node.ChildNodes().OfType<IdentifierNameSyntax>().First();
+                context.ReportDiagnostic(Diagnostic.Create(WUX_Rule, idNameNode.GetLocation()));
             }
         }
+
+        //Navigate up the tree to the full ID name.
+        private String GetFullID(QualifiedNameSyntax node)
+        {
+            //get to the top level parent
+            while (node.Parent.IsKind(SyntaxKind.QualifiedName))
+            {
+                node = (QualifiedNameSyntax)node.Parent;
+            }
+            //Return a string rep of the full Type/Namespace
+            return node.Left.ToString() + "." + node.Right.ToString();
+        }
+
+        //TODO: make this an external resource?
+        private String[] ValidNames = new String[] 
+            {   "Windows.UI.Colors",
+                "Windows.UI.ColorHelper",
+                "Windows.UI.Text.CaretType",
+                "Windows.UI.Text.FindOptions",
+                "Windows.UI.Text.FontStretch",
+                "Windows.UI.Text.FontStyle",
+                "Windows.UI.Text.FontWeight",
+                "Windows.UI.Text.FormatEffect",
+                "Windows.UI.Text.HorizontalCharacterAlignment",
+                "Windows.UI.Text.IRichEditTextRange",
+                "Windows.UI.Text.ITextCharacterFormat",
+                "Windows.UI.Text.ITextDocument",
+                "Windows.UI.Text.ITextParagraphFormat",
+                "Windows.UI.Text.ITextRange",
+                "Windows.UI.Text.ITextSelection",
+                "Windows.UI.Text.LetterCase",
+                "Windows.UI.Text.LineSpacingRule",
+                "Windows.UI.Text.LinkType",
+                "Windows.UI.Text.MarkerAlignment",
+                "Windows.UI.Text.MarkerStyle",
+                "Windows.UI.Text.MarkerType",
+                "Windows.UI.Text.ParagraphAlignment",
+                "Windows.UI.Text.ParagraphStyle",
+                "Windows.UI.Text.PointOptions",
+                "Windows.UI.Text.RangeGravity",
+                "Windows.UI.Text.RichEditTextDocument",
+                "Windows.UI.Text.RichEditTextRange",
+                "Windows.UI.Text.SelectionOptions",
+                "Windows.UI.Text.SelectionType",
+                "Windows.UI.Text.TabAlignment",
+                "Windows.UI.Text.TabLeader",
+                "Windows.UI.Text.TextConstants",
+                "Windows.UI.Text.TextDecorations",
+                "Windows.UI.Text.TextGetOptions",
+                "Windows.UI.Text.TextRangeUnit",
+                "Windows.UI.Text.TextScript",
+                "Windows.UI.Text.TextSetOptions",
+                "Windows.UI.Text.UnderlineType",
+                "Windows.UI.Text.VerticalCharacterAlignment",
+                "Windows.UI.Xaml", // Replace with more namespaces?
+                "Windows.System.DispatcherQueue",
+                "Windows.System.DispatcherQueueController",
+                "Windows.System.DispatcherQueueHandler",
+                "Windows.System.DispatcherQueuePriority",
+                "Windows.System.DispatcherQueueShutdownStartingEventArgs",
+                "Windows.System.DispatcherQueueTimer"
+            };
     }
 }
