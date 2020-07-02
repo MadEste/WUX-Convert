@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prototype_Xaml_Fix", "Prototype_Xaml_Fix\Prototype_Xaml_Fix.csproj", "{0ABFFA6A-C4EF-497B-A98E-1ABC9E321FB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prototype_Xaml_Fix.Tests", "Prototype_Xaml_Fix.Tests\Prototype_Xaml_Fix.Tests.csproj", "{6F4757C3-651D-4C91-B703-1CB56A6A7A58}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0ABFFA6A-C4EF-497B-A98E-1ABC9E321FB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0ABFFA6A-C4EF-497B-A98E-1ABC9E321FB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0ABFFA6A-C4EF-497B-A98E-1ABC9E321FB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0ABFFA6A-C4EF-497B-A98E-1ABC9E321FB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F4757C3-651D-4C91-B703-1CB56A6A7A58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F4757C3-651D-4C91-B703-1CB56A6A7A58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F4757C3-651D-4C91-B703-1CB56A6A7A58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F4757C3-651D-4C91-B703-1CB56A6A7A58}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {58412133-7148-40BC-BDB7-1755AD01E078}
+	EndGlobalSection
+EndGlobal

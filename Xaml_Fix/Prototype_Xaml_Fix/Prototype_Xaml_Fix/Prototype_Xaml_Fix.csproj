@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <NuspecFile>Prototype_Xaml_Fix.nuspec</NuspecFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="RapidXaml.CustomAnalysis" Version="0.9.7" />
+    </ItemGroup>
+
+</Project>
