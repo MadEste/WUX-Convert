@@ -9,6 +9,17 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
+/**
+ * Notes... Need to use only one rule and code fix so that user experience is that all conversion happens in one click.
+ * Need to extend rule beyond namespaces to also fix other conversion conflicts : 
+ * 1. event dispatch location changes: e.UWPLaunchActivatedEventArgs.exampleDispatch...
+ * 2. Microsoft.UI.Xaml.LaunchActivatedEventArgs ...
+ *      using Windows.ApplicationModel.Activation;
+ *      using Microsoft.UI.Xaml;
+ *  Both have confusing ambiguous LaunchActivatedEventArgs types shared
+ * 
+ */
+
 namespace Prototype_Fixes
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
