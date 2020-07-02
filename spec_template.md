@@ -1,5 +1,3 @@
-> See comments in Markdown for how to use this spec template
-
 <!-- The purpose of this spec is to describe a new feature and
 its APIs that make up a new feature in WinUI. -->
 
@@ -12,9 +10,12 @@ Hopefully we'll be able to copy it mostly verbatim.
 So the second audience is everyone that reads there to learn how
 and why to use this API. -->
 
+
 # Background
 <!-- Use this section to provide background context for the new API(s) 
 in this spec. -->
+Xaml has many private dependencies and Microsoft is working to get to a purely public SDK. Xaml, Comnposition, and Input components of Windows are being lifted out of the OS and deployed in WinUI3. WinUI3 will include support for apps to run in the Desktop app model, not just the UWP app model.
+WinUI3 has differences compared to existing API's such as WinUI2 The purpose of this project is to create a porting solution in the form of Code Analyzers and Fixes to allow allow Developers to convert files to the new WinUI3 wherever possible.
 
 <!-- This section and the appendix are the only sections that likely
 do not get copied to docs.microsoft.com; they're just an aid to reading this spec. -->
@@ -34,6 +35,12 @@ the reader "go read 100 pages of background information posted at ...". -->
 <!-- Use this section to provide a brief description of the feature.
 For an example, see the introduction to the PasswordBox control 
 (http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
+Custom Roslyn Analyizer and CodeFix to convert existing UWP and WinUI2 C# projects to WinUI3.
+
+In General, several types in the Windows.UI.Xaml namespace 
+are now located in the Microsoft.UI.Xaml
+
+Generate Diagnostics for old Windows Namespace Usings to the new Microsoft namespace
 
 
 # Examples
@@ -47,8 +54,35 @@ example code with each description. The general format is:
   
 <!-- Code samples should be in C# and/or C++/WinRT -->
 
-<!-- As an example of this section, see the Examples section for the PasswordBox control 
-(https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
+Given the following code :
+```
+using System;
+using Windows.UI;
+using Windows.UI.Xaml;
+namespace ExampleCode
+{
+    class Program
+    {
+        Windows.UI.Xaml.Controls.Frame rootFrame = Window.Current.Content as Microsoft.UI.Xaml.Controls.Frame;
+    }
+}
+            
+```
+
+The CodeFix applied to the Solution:
+```
+using System;
+using Windows.UI;
+using Microsoft.UI.Xaml;
+namespace ExampleCode
+{
+    class Program
+    {
+        Microsoft.UI.Xaml.Controls.Frame rootFrame = Window.Current.Content as Microsoft.UI.Xaml.Controls.Frame;
+    }
+}
+            
+```
 
 
 # Remarks
