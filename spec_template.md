@@ -14,8 +14,8 @@ and why to use this API. -->
 # Background
 <!-- Use this section to provide background context for the new API(s) 
 in this spec. -->
-Xaml has many private dependencies and Microsoft is working to get to a purely public SDK. Xaml, Comnposition, and Input components of Windows are being lifted out of the OS and deployed in WinUI3. WinUI3 will include support for apps to run in the Desktop app model, not just the UWP app model.
-WinUI3 has differences compared to existing API's such as WinUI2 The purpose of this project is to create a porting solution in the form of Code Analyzers and Fixes to allow allow Developers to convert files to the new WinUI3 wherever possible.
+Xaml has many private dependencies and Microsoft is working to get to a purely public SDK. Xaml, Composition, and Input components of Windows are being lifted out of the OS and deployed in WinUI3. WinUI3 will include support for apps to run in the Desktop app model, not just the UWP app model.
+WinUI3 has differences compared to WinUI2. The purpose of this project is to create a porting solution in the form of Code Analyzers and Fixes to allow allow Developers to convert files to the new WinUI3 wherever possible.
 
 <!-- This section and the appendix are the only sections that likely
 do not get copied to docs.microsoft.com; they're just an aid to reading this spec. -->
@@ -35,7 +35,7 @@ the reader "go read 100 pages of background information posted at ...". -->
 <!-- Use this section to provide a brief description of the feature.
 For an example, see the introduction to the PasswordBox control 
 (http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
-Custom Roslyn Analyizer and CodeFix to convert existing UWP and WinUI2 C# projects to WinUI3.
+This tool assists with the conversion process with custom Roslyn Analyzer and CodeFixs to convert existing UWP/WinUI2 C# projects to WinUI3.
 
 In General, several types in the Windows.UI.Xaml namespace 
 are now located in the Microsoft.UI.Xaml
@@ -85,28 +85,18 @@ namespace ExampleCode
 ```
 
 
-# Remarks
-<!-- Explanation and guidance that doesn't fit into the Examples section. -->
+# Conversion Process
+<!-- Explanation and guidance on how to use the converter that doesn't fit into the Examples section. -->
 
-<!-- APIs should only throw exceptions in exceptional conditions; basically,
-only when there's a bug in the caller, such as argument exception.  But if for some
-reason it's necessary for a caller to catch an exception from an API, call that
-out with an explanation either here or in the Examples -->
+1. Download and use WinUI packages in your app using the NuGet package manager: see the [Getting Started](https://docs.microsoft.com/uwp/toolkits/winui/getting-started) with the Windows UI Library page for more information.
+2. Light Bulb suggestions should highlight issues that need to be updated for WinUI3 conversion. 
+3. Click the down arrow by the lightbulb, Convert to WinUI3 and select Fix all occurences in project. 
+4. All namespace changes should be fixed in your project!
 
-# API Notes
-<!-- Option 1: Give a one or two line description of each API (type
-and member), or at least the ones that aren't obvious
-from their name.  These descriptions are what show up
-in IntelliSense. For properties, specify the default value of the property if it
-isn't the type's default (for example an int-typed property that doesn't default to zero.) -->
-
-<!-- Option 2: Put these descriptions in the below API Details section,
-with a "///" comment above the member or type. -->
-
-# API Details
-<!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
+Note some WInUI2 resources are not compatible with WinUI3. These issues will be highlighted in code but cannot be fixed by the converter. 
 
 # Appendix
 <!-- Anything else that you want to write down for posterity, but 
 that isn't necessary to understand the purpose and usage of the API.
 For example, implementation details. -->
+Testing process and design notes... To be added. 
