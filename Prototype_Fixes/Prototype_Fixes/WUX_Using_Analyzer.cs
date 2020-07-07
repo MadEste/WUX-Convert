@@ -26,7 +26,7 @@ namespace Prototype_Fixes
     public class WUX_Using_Analyzer : DiagnosticAnalyzer
     {
         // Analyzer ID's
-        public const string WUX_ID = "WUX_Update_1_1_1";
+        public const string WUX_ID = "WUX_Update_1_2_1";
 
         // Localized analyzer descriptions
         // See https://github.com/dotnet/roslyn/blob/master/docs/analyzers/Localizing%20Analyzers.md for more on localization
@@ -52,6 +52,7 @@ namespace Prototype_Fixes
             context.RegisterSyntaxNodeAction(AnalyzeNode, SyntaxKind.QualifiedName);
         }
 
+        /// <see cref="Windows.UI.Xaml.FrameworkElement.ArrangeOverride(Windows.Foundation.Size)" />  
         // Decides if node needs a diagnostic thrown
         private void AnalyzeNode(SyntaxNodeAnalysisContext context)
         {
@@ -59,13 +60,15 @@ namespace Prototype_Fixes
            
             //try casting to Qualified Name, should always succede because of filter in initialize
             var node = (QualifiedNameSyntax)context.Node;
-            //filter out qualified names that are not Windows
-            if (!node.Left.ToString().Equals("Windows"))
+            //filter out qualified names that are not Windows, or are part of documentation
+            if (!node.Left.ToString().Equals("Windows") || node.IsPartOfStructuredTrivia())
             {
                 return;
             }
+
             //Get full Name
             String nodeRep = GetFullID(node);
+
             // TODO: Does this need to be a more explicit check?
             if (ValidNames.Contains(nodeRep) || nodeRep.StartsWith("Windows.UI.Xaml")) // for now check if .Xaml after the or instead of direct namespaces
             {

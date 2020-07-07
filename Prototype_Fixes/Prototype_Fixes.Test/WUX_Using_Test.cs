@@ -223,7 +223,6 @@ namespace Prototype_Fixes.Test
                 }
             }";
 
-
         //Denotes that method is a data test
         [DataTestMethod]
         [DataRow(""), DataRow(NoWUX1), DataRow(NoWUX2), DataRow(NoWUX3), DataRow(NoWUX4), DataRow(NoWUX5)]
