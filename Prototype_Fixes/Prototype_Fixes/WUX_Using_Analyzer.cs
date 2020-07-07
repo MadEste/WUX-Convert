@@ -26,7 +26,7 @@ namespace Prototype_Fixes
     public class WUX_Using_Analyzer : DiagnosticAnalyzer
     {
         // Analyzer ID's
-        public const string WUX_ID = "WUX_Update";
+        public const string WUX_ID = "WUX_Update_1.1";
 
         // Localized analyzer descriptions
         // See https://github.com/dotnet/roslyn/blob/master/docs/analyzers/Localizing%20Analyzers.md for more on localization

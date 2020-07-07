@@ -9,7 +9,7 @@
 
   <PropertyGroup>
     <!--<PackageId>Prototype_Fixes</PackageId>-->
-    <PackageVersion>1.0.0.0</PackageVersion>
+    <PackageVersion>1.1.0.0</PackageVersion>
     <Authors>t-estes</Authors>
     <PackageLicenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</PackageLicenseUrl>
     <PackageProjectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</PackageProjectUrl>
@@ -47,5 +47,11 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+
+	<Target Name="CopyToTempNuget" AfterTargets="Pack">
+
+		<Copy SourceFiles="@(NugetPackOutput)" Condition="'%(Extension)'=='.nupkg'" DestinationFolder="C:\Users\t-estes\Desktop\NugetPkgs" />
+
+	</Target>
 
 </Project>
