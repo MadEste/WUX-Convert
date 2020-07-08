@@ -85,6 +85,49 @@ namespace Prototype_Fixes.Test
                 }
             }";
 
+        //5. Should not throw diagnostics in summary pages
+        private const string NoWUX5 = @"
+            using System;
+            namespace FakeNamespace
+            {
+                class Program
+                {
+                    /// <see cref=""Windows.UI.Xaml.FrameworkElement.ArrangeOverride(Windows.Foundation.Size)"" />
+                    static void Main(string[] args)
+                    {
+                        int i = 0;
+                        Console.WriteLine(i++);
+                    }
+                }
+            }";
+
+        //6. Should not throw diagnostics in summary pages
+        private const string NoWUX6 = @"
+            using System;
+            namespace FakeNamespace
+            {
+                class Program
+                {
+                    /// <summary>
+                    /// Measures the child elements of a
+                    /// <see cref=""T:WinRTXamlToolkit.Controls.WrapPanel"" /> in anticipation
+                    /// of arranging them during the
+                    /// <see cref=""Windows.UI.Xaml.FrameworkElement.ArrangeOverride(Windows.Foundation.Size)"" />
+                    /// pass.
+                    /// </summary>
+                    /// <param name=""constraint"">
+                    /// The size available to child elements of the wrap panel.
+                    /// </param>
+                    /// <returns>
+                    /// The size required by the
+                    /// <see cref=""T:WinRTXamlToolkit.Controls.WrapPanel"" /> and its 
+                    /// elements.
+                    /// </returns>   
+                    static void Main(string[] args)
+                    {
+                    }
+                }
+            }";
 
         // This contains code That should be fixed
 
@@ -208,10 +251,9 @@ namespace Prototype_Fixes.Test
                 }
             }";
 
-
         //Denotes that method is a data test
         [DataTestMethod]
-        [DataRow(""), DataRow(NoWUX1), DataRow(NoWUX2), DataRow(NoWUX3), DataRow(NoWUX4)]
+        [DataRow(""), DataRow(NoWUX1), DataRow(NoWUX2), DataRow(NoWUX3), DataRow(NoWUX4), DataRow(NoWUX5), DataRow(NoWUX6)]
         // Test Method for valid code with no triggered diagnostics
         public void ValidWUXUsingNoDiagnostic(string testCode)
         {
