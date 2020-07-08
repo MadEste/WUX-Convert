@@ -89,12 +89,13 @@ namespace ExampleCode
 <!-- Explanation and guidance on how to use the converter that doesn't fit into the Examples section. -->
 
 1. Download and use WinUI packages in your app using the NuGet package manager: see the [Getting Started](https://docs.microsoft.com/uwp/toolkits/winui/getting-started) with the Windows UI Library page for more information.
-2. Light Bulb suggestions should highlight issues that need to be updated for WinUI3 conversion. 
-3. Click the down arrow by the lightbulb, Convert to WinUI3 and select Fix all occurences in project. 
+2. Some conflicting Nuget packages must be uninstalled. (TODO: more detailed instructions)
+3. Light Bulb suggestions should highlight issues that need to be updated for WinUI3 conversion. 
+4. Click the down arrow by the lightbulb, Convert to WinUI3 and select Fix all occurences in project. 
 
 ![Visual Studio Lightbulb Suggestion](./assets/img1.png#thumb)
 
-4. All namespace changes should be fixed in your project!
+5. All namespace changes should be fixed in your project!
 
 Note some WInUI2 resources are not compatible with WinUI3. These issues may be highlighted in code but cannot be fixed by the converter. 
 
@@ -105,7 +106,7 @@ For example, implementation details. -->
 Testing process and design notes... To be added. 
 <style>
 img[src*="#thumb"] {
-   margin-left:2%;
+   margin-left:3%;
    width:50%;
    height:auto;
 }
