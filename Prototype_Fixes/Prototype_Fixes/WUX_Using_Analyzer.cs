@@ -27,7 +27,9 @@ namespace Prototype_Fixes
     {
         // Analyzer ID's
         public const string WUX_ID = "WUX_Update_1_2_1";
+        public const string INC_ID = "WUX_Incompatible_1_2_1";
         private static string[] VALIDNAMES = Namespaces.GetValidNames();
+        private static string[] INVALIDNAMES = Namespaces.GetInvalidNames();
 
         // Localized analyzer descriptions
         // See https://github.com/dotnet/roslyn/blob/master/docs/analyzers/Localizing%20Analyzers.md for more on localization
@@ -39,9 +41,10 @@ namespace Prototype_Fixes
         // Creates a rule for WUX using Diagnostic
         // Creates a rule for WUX VAR Diagnostic TODO: update strings for this message?
         private static readonly DiagnosticDescriptor WUX_Rule = new DiagnosticDescriptor(WUX_ID, WUX_Using_Title, WUX_Using_MessageFormat, Category, DiagnosticSeverity.Error, isEnabledByDefault: true, description: WUX_Using_Description);
+        private static readonly DiagnosticDescriptor INC_Rule = new DiagnosticDescriptor(INC_ID, "Incompatible With WINUI3", WUX_Using_MessageFormat, Category, DiagnosticSeverity.Error, isEnabledByDefault: true, description: WUX_Using_Description);
 
         //Returns a set of descriptors (Rules) that this analyzer is capable of reproducing
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get { return ImmutableArray.Create(WUX_Rule); } }
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get { return ImmutableArray.Create(WUX_Rule, INC_Rule); } }
 
         // Overide to implement DiagnosticAnalyzer Class
         public override void Initialize(AnalysisContext context)
@@ -61,14 +64,22 @@ namespace Prototype_Fixes
            
             //try casting to Qualified Name, should always succede because of filter in initialize
             var node = (QualifiedNameSyntax)context.Node;
-            //filter out qualified names that are not Windows, or are part of documentation
-            if (!node.Left.ToString().Equals("Windows") || node.IsPartOfStructuredTrivia())
+            //filter out qualified names that are not Windows, Microsoft, or are part of documentation
+            if ((!node.Left.ToString().Equals("Windows") && !node.Left.ToString().Equals("Microsoft")) || node.IsPartOfStructuredTrivia())
             {
                 return;
             }
 
             //Get full Name
             String nodeRep = GetFullID(node);
+
+            //Check if part of Invalid
+            if (INVALIDNAMES.Contains(nodeRep))//|| nodeRep.StartsWith("Windows.UI.Input.Inking"))
+            {
+                // Create Diagnostic for invalid nodes
+                var idNameNode = node.ChildNodes().OfType<IdentifierNameSyntax>().First();
+                context.ReportDiagnostic(Diagnostic.Create(INC_Rule, idNameNode.GetLocation()));
+            }
 
             // TODO: Does this need to be a more explicit check?
             if (VALIDNAMES.Contains(nodeRep) || nodeRep.StartsWith("Windows.UI.Xaml")) // for now check if .Xaml after the or instead of direct namespaces

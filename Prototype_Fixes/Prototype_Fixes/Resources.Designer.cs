@@ -61,8 +61,18 @@ namespace Prototype_Fixes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Microsoft.Xaml.Interactivity.
+        /// </summary>
+        public static string invalidNames {
+            get {
+                return ResourceManager.GetString("invalidNames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Windows.UI.Colors
         ///Windows.UI.ColorHelper
+        ///Windows.UI.Composition
         ///Windows.UI.Text.CaretType
         ///Windows.UI.Text.FindOptions
         ///Windows.UI.Text.FontStretch
@@ -76,8 +86,7 @@ namespace Prototype_Fixes {
         ///Windows.UI.Text.ITextParagraphFormat
         ///Windows.UI.Text.ITextRange
         ///Windows.UI.Text.ITextSelection
-        ///Windows.UI.Text.LetterCase
-        ///Windows.UI.Text.LineSp [rest of string was truncated]&quot;;.
+        ///Windows.UI.Text.LetterCase [rest of string was truncated]&quot;;.
         /// </summary>
         public static string validNames {
             get {

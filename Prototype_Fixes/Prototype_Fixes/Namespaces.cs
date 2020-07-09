@@ -6,11 +6,19 @@ using System.Text;
 
 namespace Prototype_Fixes
 {
-    public class Namespaces
+    class Namespaces
     {
-        public static String[] GetValidNames()
+        internal static string[] GetValidNames()
         {
             StringReader sr = new StringReader(Resources.validNames);
+            var strs = sr.ReadToEnd();
+            var strArr = strs.Split('\n');
+            return strArr;
+        }
+
+        internal static string[] GetInvalidNames()
+        {
+            StringReader sr = new StringReader(Resources.invalidNames);
             var strs = sr.ReadToEnd();
             var strArr = strs.Split('\n');
             return strArr;

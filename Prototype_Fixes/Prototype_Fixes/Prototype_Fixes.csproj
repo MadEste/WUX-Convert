@@ -24,10 +24,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="invalidNames.txt" />
     <None Remove="validNames.txt" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="invalidNames.txt" />
     <Content Include="validNames.txt" />
   </ItemGroup>
 
