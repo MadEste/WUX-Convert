@@ -1,5 +1,6 @@
 Windows.UI.Colors
 Windows.UI.ColorHelper
+Windows.UI.Composition
 Windows.UI.Text.CaretType
 Windows.UI.Text.FindOptions
 Windows.UI.Text.FontStretch
