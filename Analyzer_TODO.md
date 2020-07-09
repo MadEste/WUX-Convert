@@ -6,10 +6,7 @@
 ### `Windows.UI`
 - [x] .Colors (Lifting)
 - [x] .ColorHelper (Lifting)
-- [ ] .add 
-
-Microsoft.UI? 
-Microsoft.UI.Composition?
+- [x] .Composition
 
 ### `Windows.UI.Text`
 - [x] .CaretType
