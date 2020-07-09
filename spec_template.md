@@ -104,6 +104,14 @@ Note some WInUI2 resources are not compatible with WinUI3. These issues may be h
 that isn't necessary to understand the purpose and usage of the API.
 For example, implementation details. -->
 Testing process and design notes... To be added. 
+
+Microsoft.UI.Xaml is not compatible with Microsoft.WinUI(new Release)
+
+
+
+
+
+
 <style>
 img[src*="#thumb"] {
    margin-left:3%;
