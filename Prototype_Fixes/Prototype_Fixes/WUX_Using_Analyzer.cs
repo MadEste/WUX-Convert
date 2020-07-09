@@ -27,6 +27,7 @@ namespace Prototype_Fixes
     {
         // Analyzer ID's
         public const string WUX_ID = "WUX_Update_1_2_1";
+        private static string[] VALIDNAMES = Namespaces.GetValidNames();
 
         // Localized analyzer descriptions
         // See https://github.com/dotnet/roslyn/blob/master/docs/analyzers/Localizing%20Analyzers.md for more on localization
@@ -70,7 +71,7 @@ namespace Prototype_Fixes
             String nodeRep = GetFullID(node);
 
             // TODO: Does this need to be a more explicit check?
-            if (ValidNames.Contains(nodeRep) || nodeRep.StartsWith("Windows.UI.Xaml")) // for now check if .Xaml after the or instead of direct namespaces
+            if (VALIDNAMES.Contains(nodeRep) || nodeRep.StartsWith("Windows.UI.Xaml")) // for now check if .Xaml after the or instead of direct namespaces
             {
                 // Create Diagnostic to report 
                 // to update without changing Codefix, report at the location of its identifier
@@ -90,55 +91,5 @@ namespace Prototype_Fixes
             //Return a string rep of the full Type/Namespace
             return node.Left.ToString() + "." + node.Right.ToString();
         }
-
-        //TODO: make this an external resource?
-        private String[] ValidNames = new String[] 
-            {   "Windows.UI.Colors",
-                "Windows.UI.ColorHelper",
-                "Windows.UI.Text.CaretType",
-                "Windows.UI.Text.FindOptions",
-                "Windows.UI.Text.FontStretch",
-                "Windows.UI.Text.FontStyle",
-                "Windows.UI.Text.FontWeight",
-                "Windows.UI.Text.FormatEffect",
-                "Windows.UI.Text.HorizontalCharacterAlignment",
-                "Windows.UI.Text.IRichEditTextRange",
-                "Windows.UI.Text.ITextCharacterFormat",
-                "Windows.UI.Text.ITextDocument",
-                "Windows.UI.Text.ITextParagraphFormat",
-                "Windows.UI.Text.ITextRange",
-                "Windows.UI.Text.ITextSelection",
-                "Windows.UI.Text.LetterCase",
-                "Windows.UI.Text.LineSpacingRule",
-                "Windows.UI.Text.LinkType",
-                "Windows.UI.Text.MarkerAlignment",
-                "Windows.UI.Text.MarkerStyle",
-                "Windows.UI.Text.MarkerType",
-                "Windows.UI.Text.ParagraphAlignment",
-                "Windows.UI.Text.ParagraphStyle",
-                "Windows.UI.Text.PointOptions",
-                "Windows.UI.Text.RangeGravity",
-                "Windows.UI.Text.RichEditTextDocument",
-                "Windows.UI.Text.RichEditTextRange",
-                "Windows.UI.Text.SelectionOptions",
-                "Windows.UI.Text.SelectionType",
-                "Windows.UI.Text.TabAlignment",
-                "Windows.UI.Text.TabLeader",
-                "Windows.UI.Text.TextConstants",
-                "Windows.UI.Text.TextDecorations",
-                "Windows.UI.Text.TextGetOptions",
-                "Windows.UI.Text.TextRangeUnit",
-                "Windows.UI.Text.TextScript",
-                "Windows.UI.Text.TextSetOptions",
-                "Windows.UI.Text.UnderlineType",
-                "Windows.UI.Text.VerticalCharacterAlignment",
-                "Windows.UI.Xaml", // Replace with more namespaces?
-                "Windows.System.DispatcherQueue",
-                "Windows.System.DispatcherQueueController",
-                "Windows.System.DispatcherQueueHandler",
-                "Windows.System.DispatcherQueuePriority",
-                "Windows.System.DispatcherQueueShutdownStartingEventArgs",
-                "Windows.System.DispatcherQueueTimer"
-            };
     }
 }

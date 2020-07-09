@@ -61,6 +61,31 @@ namespace Prototype_Fixes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Windows.UI.Colors
+        ///Windows.UI.ColorHelper
+        ///Windows.UI.Text.CaretType
+        ///Windows.UI.Text.FindOptions
+        ///Windows.UI.Text.FontStretch
+        ///Windows.UI.Text.FontStyle
+        ///Windows.UI.Text.FontWeight
+        ///Windows.UI.Text.FormatEffect
+        ///Windows.UI.Text.HorizontalCharacterAlignment
+        ///Windows.UI.Text.IRichEditTextRange
+        ///Windows.UI.Text.ITextCharacterFormat
+        ///Windows.UI.Text.ITextDocument
+        ///Windows.UI.Text.ITextParagraphFormat
+        ///Windows.UI.Text.ITextRange
+        ///Windows.UI.Text.ITextSelection
+        ///Windows.UI.Text.LetterCase
+        ///Windows.UI.Text.LineSp [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string validNames {
+            get {
+                return ResourceManager.GetString("validNames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Windows Namespace should be updated to Microsoft.
         /// </summary>
         public static string WUX_Using_Description {

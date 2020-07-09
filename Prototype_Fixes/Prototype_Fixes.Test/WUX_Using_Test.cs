@@ -288,6 +288,11 @@ namespace Prototype_Fixes.Test
 
             VerifyCSharpFix(test, fixTest);
         }
+        [TestMethod]
+        public void OutputsNames()
+        {
+            Console.WriteLine(string.Join("\n", Prototype_Fixes.Namespaces.GetValidNames()));
+        }
 
         //Returns a WUX_Using_CodeFix
         protected override CodeFixProvider GetCSharpCodeFixProvider()

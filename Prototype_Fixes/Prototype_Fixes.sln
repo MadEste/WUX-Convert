@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prototype_Fixes", "Prototype_Fixes\Prototype_Fixes.csproj", "{C96B6B58-9330-41B0-9585-D46EE86E90D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Prototype_Fixes", "Prototype_Fixes\Prototype_Fixes.csproj", "{C96B6B58-9330-41B0-9585-D46EE86E90D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prototype_Fixes.Test", "Prototype_Fixes.Test\Prototype_Fixes.Test.csproj", "{D3F7345C-F4B6-4B29-AD78-C3D771544E44}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Prototype_Fixes.Test", "Prototype_Fixes.Test\Prototype_Fixes.Test.csproj", "{D3F7345C-F4B6-4B29-AD78-C3D771544E44}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prototype_Fixes.Vsix", "Prototype_Fixes.Vsix\Prototype_Fixes.Vsix.csproj", "{9F09F5B0-0FC5-4F01-9A24-17F2C365C446}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Prototype_Fixes.Vsix", "Prototype_Fixes.Vsix\Prototype_Fixes.Vsix.csproj", "{9F09F5B0-0FC5-4F01-9A24-17F2C365C446}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
