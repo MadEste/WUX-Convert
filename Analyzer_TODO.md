@@ -59,7 +59,7 @@
 - [ ] `<WebView/> -> <WebView2/>`
 
 ### Warnings / Cannot Fix
-- [ ] Ink (using Windows.UI.Input.Inking;)
+- [x] Ink (using Windows.UI.Input.Inking;)
 - [ ] No support for Xbox
 - [ ] No support for HoloLens
 - [ ] No support for windowed popups
