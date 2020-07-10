@@ -9,7 +9,7 @@
 
   <PropertyGroup>
     <!--<PackageId>Prototype_Fixes</PackageId>-->
-    <PackageVersion>1.2.1</PackageVersion>
+    <PackageVersion>1.3.0</PackageVersion>
     <Authors>t-estes</Authors>
     <PackageLicenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</PackageLicenseUrl>
     <PackageProjectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</PackageProjectUrl>

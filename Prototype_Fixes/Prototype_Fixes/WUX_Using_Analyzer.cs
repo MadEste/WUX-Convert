@@ -26,8 +26,9 @@ namespace Prototype_Fixes
     public class WUX_Using_Analyzer : DiagnosticAnalyzer
     {
         // Analyzer ID's
-        public const string WUX_ID = "WUX_Update_1_2_1";
-        public const string INC_ID = "WUX_Incompatible_1_2_1";
+        public const string WUX_ID = "WUX_Update_1_3_0";
+        public const string INC_ID = "WUX_Incompatible_1_3_0";
+        public const string LAU_ID = "EventArgs_Change_1_3_0";
         private static String[] VALIDNAMES = Namespaces.GetValidNames();
         private static String[] INVALIDNAMES = Namespaces.GetInvalidNames();
 
@@ -42,9 +43,10 @@ namespace Prototype_Fixes
         // Creates a rule for WUX VAR Diagnostic TODO: update strings for this message?
         private static readonly DiagnosticDescriptor WUX_Rule = new DiagnosticDescriptor(WUX_ID, WUX_Using_Title, WUX_Using_MessageFormat, Category, DiagnosticSeverity.Error, isEnabledByDefault: true, description: WUX_Using_Description);
         private static readonly DiagnosticDescriptor INC_Rule = new DiagnosticDescriptor(INC_ID, "Incompatible With WINUI3", WUX_Using_MessageFormat, Category, DiagnosticSeverity.Error, isEnabledByDefault: true, description: WUX_Using_Description);
+        private static readonly DiagnosticDescriptor LAUNCH_Rule = new DiagnosticDescriptor(LAU_ID, "Event Args Ambiguous Namespace Move", WUX_Using_MessageFormat, Category, DiagnosticSeverity.Error, isEnabledByDefault: true, description: WUX_Using_Description);
 
         //Returns a set of descriptors (Rules) that this analyzer is capable of reproducing
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get { return ImmutableArray.Create(WUX_Rule, INC_Rule); } }
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get { return ImmutableArray.Create(WUX_Rule, INC_Rule, LAUNCH_Rule); } }
 
         // Overide to implement DiagnosticAnalyzer Class
         public override void Initialize(AnalysisContext context)
@@ -54,6 +56,19 @@ namespace Prototype_Fixes
             context.EnableConcurrentExecution();
             // Call analyzer on all Identifier Name Nodes to see if need to implement diagnostic at that location
             context.RegisterSyntaxNodeAction(AnalyzeNode, SyntaxKind.QualifiedName);
+            context.RegisterSyntaxNodeAction(AnalyzeLaunchNode, SyntaxKind.IdentifierName);
+        }
+
+        //to make diagnostics for analyze
+        private void AnalyzeLaunchNode(SyntaxNodeAnalysisContext context)
+        {
+            var node = (IdentifierNameSyntax)context.Node;
+            if (node.Identifier.ToString().Equals("LaunchActivatedEventArgs"))
+            {
+                // Create Diagnostic to report 
+                context.ReportDiagnostic(Diagnostic.Create(LAUNCH_Rule, node.GetLocation()));
+            }
+
         }
 
         /// <see cref="Windows.UI.Xaml.FrameworkElement.ArrangeOverride(Windows.Foundation.Size)" />  
