@@ -134,7 +134,7 @@ namespace Prototype_Fixes.Test
         // 1. Regular using CodeFix
         private const string UsingWUX = @"
             using System;
-            using Windows.UI.Xaml;
+            using Windows.UI.Text.LinkType;
             namespace FakeNamespace
             {
                 class Program
@@ -143,7 +143,7 @@ namespace Prototype_Fixes.Test
             }";
         private const string UsingWUXFix = @"
             using System;
-            using Microsoft.UI.Xaml;
+            using Microsoft.UI.Text.LinkType;
             namespace FakeNamespace
             {
                 class Program

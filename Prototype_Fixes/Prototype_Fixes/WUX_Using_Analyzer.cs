@@ -28,8 +28,8 @@ namespace Prototype_Fixes
         // Analyzer ID's
         public const string WUX_ID = "WUX_Update_1_2_1";
         public const string INC_ID = "WUX_Incompatible_1_2_1";
-        private static string[] VALIDNAMES = Namespaces.GetValidNames();
-        private static string[] INVALIDNAMES = Namespaces.GetInvalidNames();
+        private static String[] VALIDNAMES = Namespaces.GetValidNames();
+        private static String[] INVALIDNAMES = Namespaces.GetInvalidNames();
 
         // Localized analyzer descriptions
         // See https://github.com/dotnet/roslyn/blob/master/docs/analyzers/Localizing%20Analyzers.md for more on localization
@@ -60,8 +60,6 @@ namespace Prototype_Fixes
         // Decides if node needs a diagnostic thrown
         private void AnalyzeNode(SyntaxNodeAnalysisContext context)
         {
-
-           
             //try casting to Qualified Name, should always succede because of filter in initialize
             var node = (QualifiedNameSyntax)context.Node;
             //filter out qualified names that are not Windows, Microsoft, or are part of documentation

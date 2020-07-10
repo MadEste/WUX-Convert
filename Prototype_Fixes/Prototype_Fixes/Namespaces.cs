@@ -12,15 +12,21 @@ namespace Prototype_Fixes
         {
             StringReader sr = new StringReader(Resources.validNames);
             var strs = sr.ReadToEnd();
-            var strArr = strs.Split('\n');
+            var strArr = strs.Split(
+                new[] { Environment.NewLine },
+                StringSplitOptions.None
+            );
             return strArr;
         }
 
-        internal static string[] GetInvalidNames()
+        internal static String[] GetInvalidNames()
         {
             StringReader sr = new StringReader(Resources.invalidNames);
             var strs = sr.ReadToEnd();
-            var strArr = strs.Split('\n');
+            var strArr = strs.Split(
+                new[] { Environment.NewLine },
+                StringSplitOptions.None
+            );
             return strArr;
         }
     } 
